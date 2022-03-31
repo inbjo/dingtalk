@@ -107,7 +107,7 @@ class Client extends BaseClient
      */
     public function getUseridByUnionid($unionid)
     {
-        return $this->client->get('user/getUseridByUnionid', compact('unionid'));
+        return $this->client->post('topapi/user/getbyunionid', ['unionid' => $unionid]);
     }
 
     /**
