@@ -25,7 +25,7 @@ class Client extends BaseClient
      */
     public function get($userid, $lang = null)
     {
-        return $this->client->get('user/get', compact('userid', 'lang'));
+        return $this->client->post('topapi/v2/user/get', ['userid' => $userid, 'language' => $lang]);
     }
 
     /**
