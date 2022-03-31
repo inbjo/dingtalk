@@ -30,17 +30,14 @@ class Client extends BaseClient
     /**
      * 获取部门列表
      *
-     * @param bool   $isFetchChild
      * @param string $id
      * @param string $lang
      *
      * @return mixed
      */
-    public function list($id = null, bool $isFetchChild = false, $lang = null)
+    public function list($id = null, $lang = null)
     {
-        return $this->client->get('department/list', [
-            'id' => $id, 'lang' => $lang, 'fetch_child' => $isFetchChild ? 'true' : 'false',
-        ]);
+        return $this->client->post('topapi/v2/department/listsub', ['dept_id' => $id, 'language' => $lang]);
     }
 
     /**
