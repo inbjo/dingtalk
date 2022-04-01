@@ -102,10 +102,10 @@ class OAuthClient extends Client
      *
      * @throws \EasyDingTalk\Auth\InvalidStateException
      */
-    public function user()
+    public function user(bool $isJsLogin = false)
     {
-        if (!$this->hasValidState($this->app['request']->get('state'))) {
-            throw new InvalidStateException();
+        if (!$isJsLogin && !$this->hasValidState($this->app['request']->get('state'))) {
+            throw new InvalidStateException('state invalid');
         }
 
         $data = [
