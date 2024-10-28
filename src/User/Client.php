@@ -240,4 +240,48 @@ class Client extends BaseClient
             'query_date' => $query_date, 'offset' => $offset, 'size' => $size
         ]);
     }
+
+    /**
+     * 获取离职员工
+     *
+     * @param string $nextToken
+     *
+     * @return mixed
+     */
+    public function getDismissionUsers($nextToken = '0')
+    {
+        $parms = "?nextToken={$nextToken}&maxResults=30";
+        $options = ['headers' => ['x-acs-dingtalk-access-token' => $this->app->access_token->getToken()]];
+        return $this->client->get('https://api.dingtalk.com/v1.0/hrm/employees/dismissions' . $parms, $options);
+    }
+
+    /**
+     * 获取离职员工详细信息
+     *
+     * @param string $userIdList
+     *
+     * @return mixed
+     */
+    public function getDismissionInfo($userIdList)
+    {
+        $parms = "?userIdList=" . urlencode(json_encode($userIdList));
+        $options = ['headers' => ['x-acs-dingtalk-access-token' => $this->app->access_token->getToken()]];
+        return $this->client->get('https://api.dingtalk.com/v1.0/hrm/employees/dimissionInfos' . $parms, $options);
+    }
+
+    /**
+     * 通过部门ID获取详细用户信息
+     *
+     * @param string $deptId
+     * @param int $cursor
+     * @param int $size
+     *
+     * @return mixed
+     */
+    public function getDepartUserList($deptId = 1, $cursor = 0, $size = 20)
+    {
+        $parms = "?access_token=" . $this->app->access_token->getToken();
+        $data = ['dept_id' => $deptId, 'cursor' => $cursor, 'size' => $size];
+        return $this->client->post('https://oapi.dingtalk.com/topapi/v2/user/list' . $parms, $data);
+    }
 }
